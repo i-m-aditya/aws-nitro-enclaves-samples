@@ -110,7 +110,7 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
         let len = recv_u64(fd)?;
         let mut buf = [0u8; BUF_MAX_LEN];
         recv_loop(fd, &mut buf, len)?;
-        hello_world();
+        health_check();
         println!(
             "{}",
             String::from_utf8(buf.to_vec())
@@ -119,6 +119,6 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
     }
 }
 
-pub fn hello_world() {
-    println!("Hello, world!");
+pub fn health_check() {
+    println!("Health, Check!");
 }
