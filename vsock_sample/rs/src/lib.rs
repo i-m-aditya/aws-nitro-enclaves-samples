@@ -96,6 +96,12 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
     send_u64(fd, len)?;
     send_loop(fd, buf, len)?;
 
+    // TEst code
+    std::thread::sleep(std::time::Duration::from_secs(10));
+
+    let vsocket = vsock_connect(args.cid, args.port)?;
+    let fd = vsocket.as_raw_fd();
+
     let data = "Hello, CIty!".to_string();
     let buf = data.as_bytes();
     let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
