@@ -85,8 +85,10 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
         send_u64(fd, len)?;
         send_loop(fd, buf, len)?;
         count += 1;
+        println!("Sent {} bytes", len);
         // a timer for 10 secounds
         std::thread::sleep(std::time::Duration::from_secs(10));
+        println!("Health, Check!");
     }
     let data = "Hello, world!".to_string();
     let buf = data.as_bytes();
