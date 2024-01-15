@@ -76,21 +76,27 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
     let vsocket = vsock_connect(args.cid, args.port)?;
     let fd = vsocket.as_raw_fd();
 
-    let mut count = 1;
-    // TODO: Replace this with your client code
-    while count < 50 {
-        let data = format!("Hello, world! {}", count).to_string();
-        let buf = data.as_bytes();
-        let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
-        send_u64(fd, len)?;
-        send_loop(fd, buf, len)?;
-        count += 1;
-        println!("Sent {} bytes", len);
-        // a timer for 10 secounds
-        std::thread::sleep(std::time::Duration::from_secs(10));
-        println!("Health, Check!");
-    }
+    // let mut count = 1;
+    // // TODO: Replace this with your client code
+    // while count < 3 {
+    //     let data = format!("Hello, world! {}", count).to_string();
+    //     let buf = data.as_bytes();
+    //     let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
+    //     send_u64(fd, len)?;
+    //     send_loop(fd, buf, len)?;
+    //     count += 1;
+    //     println!("Sent {} bytes", len);
+    //     // a timer for 10 secounds
+    //     std::thread::sleep(std::time::Duration::from_secs(10));
+    //     println!("Health, Check!");
+    // }
     let data = "Hello, world!".to_string();
+    let buf = data.as_bytes();
+    let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
+    send_u64(fd, len)?;
+    send_loop(fd, buf, len)?;
+
+    let data = "Hello, CIty!".to_string();
     let buf = data.as_bytes();
     let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
     send_u64(fd, len)?;
