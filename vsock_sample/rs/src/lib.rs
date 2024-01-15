@@ -123,6 +123,7 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
     listen_vsock(socket_fd, BACKLOG).map_err(|err| format!("Listen failed: {:?}", err))?;
 
     loop {
+        println!("Started listening again");
         let fd = accept(socket_fd).map_err(|err| format!("Accept failed: {:?}", err))?;
 
         // TODO: Replace this with your server code
