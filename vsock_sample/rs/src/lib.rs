@@ -96,30 +96,40 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
     let data = "Hello, world!".to_string();
     let buf = data.as_bytes();
     let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
-    send_u64(fd, len)?;
+    send_u64(fd, 3 * len)?;
     send_loop(fd, buf, len)?;
 
-    // TEst code
-    let mut count = 5;
-    while count > 0 {
-        std::thread::sleep(std::time::Duration::from_secs(10));
-        count -= 1;
-        println!("Count : {}", count);
-    }
-    println!("Middle");
-
-    // let vsocket1 = vsock_connect(args.cid, args.port)?;
-    // println!("Vsock1 connected : {:?}", vsocket1);
-    // let fd1 = vsocket.as_raw_fd();
-
-    let data = "Hello, CIty!".to_string();
-    let buf = data.as_bytes();
-    let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
-    println!("Sending {} bytes", len);
-    send_u64(fd, len)?;
-    send_loop(fd, buf, len)?;
+    let new_data = "Dean eingermane".to_string();
+    let new_buf = new_data.as_bytes();
+    let new_len: u64 = new_buf
+        .len()
+        .try_into()
+        .map_err(|err| format!("{:?}", err))?;
+    send_loop(fd, new_buf, new_len);
 
     Ok(())
+
+    // // TEst code
+    // let mut count = 5;
+    // while count > 0 {
+    //     std::thread::sleep(std::time::Duration::from_secs(10));
+    //     count -= 1;
+    //     println!("Count : {}", count);
+    // }
+    // println!("Middle");
+
+    // // let vsocket1 = vsock_connect(args.cid, args.port)?;
+    // // println!("Vsock1 connected : {:?}", vsocket1);
+    // // let fd1 = vsocket.as_raw_fd();
+
+    // let data = "Hello, CIty!".to_string();
+    // let buf = data.as_bytes();
+    // let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
+    // println!("Sending {} bytes", len);
+    // send_u64(fd, len)?;
+    // send_loop(fd, buf, len)?;
+
+    // Ok(())
 }
 
 /// Accept connections on a certain port and print
