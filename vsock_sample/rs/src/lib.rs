@@ -74,6 +74,8 @@ fn vsock_connect(cid: u32, port: u32) -> Result<VsockSocket, String> {
 /// Send 'Hello, world!' to the server
 pub fn client(args: ClientArgs) -> Result<(), String> {
     let vsocket = vsock_connect(args.cid, args.port)?;
+
+    println!("Vsock connected : {:?}", vsocket);
     let fd = vsocket.as_raw_fd();
 
     // let mut count = 1;
@@ -103,8 +105,10 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
         count -= 1;
         println!("Count : {}", count);
     }
+    println!("Middle");
 
     let vsocket1 = vsock_connect(args.cid, args.port)?;
+    println!("Vsock1 connected : {:?}", vsocket1);
     let fd1 = vsocket.as_raw_fd();
 
     let data = "Hello, CIty!".to_string();
