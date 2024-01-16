@@ -20,6 +20,7 @@ const BACKLOG: usize = 128;
 // Maximum number of connection attempts
 const MAX_CONNECTION_ATTEMPTS: usize = 5;
 
+#[derive(Debug)]
 struct VsockSocket {
     socket_fd: RawFd,
 }
