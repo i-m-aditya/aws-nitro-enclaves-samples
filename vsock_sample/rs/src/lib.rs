@@ -93,6 +93,7 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
     //     std::thread::sleep(std::time::Duration::from_secs(10));
     //     println!("Health, Check!");
     // }
+    std::thread::sleep(std::time::Duration::from_secs(10));
     let data = "Hello, world!".to_string();
     let buf = data.as_bytes();
     let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
