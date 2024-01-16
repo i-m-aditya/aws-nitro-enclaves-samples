@@ -82,18 +82,18 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
     let data = "Hello, world!".to_string();
     let buf = data.as_bytes();
     let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
-    send_u64(fd, len)?;
-    send_loop(fd, buf, len)?;
+    send_u64(fd, 2 * len)?;
+    send_loop(fd, buf, 2 * len)?;
 
-    std::thread::sleep(std::time::Duration::from_secs(5));
+    // std::thread::sleep(std::time::Duration::from_secs(5));
 
-    let new_data = "Dean eingermane".to_string();
-    let new_buf = new_data.as_bytes();
-    let new_len: u64 = new_buf
-        .len()
-        .try_into()
-        .map_err(|err| format!("{:?}", err))?;
-    send_loop(fd, new_buf, new_len);
+    // let new_data = "Dean eingermane".to_string();
+    // let new_buf = new_data.as_bytes();
+    // let new_len: u64 = new_buf
+    //     .len()
+    //     .try_into()
+    //     .map_err(|err| format!("{:?}", err))?;
+    // send_loop(fd, new_buf, new_len);
 
     Ok(())
 }
