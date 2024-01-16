@@ -29,7 +29,7 @@ pub fn send_loop(fd: RawFd, buf: &[u8], len: u64) -> Result<(), String> {
 
     while send_bytes < len {
         println!("send_bytes: {}", send_bytes);
-        let size = match send(fd, &buf[send_bytes..half], MsgFlags::empty()) {
+        let size = match send(fd, &buf[send_bytes..(send_bytes + half)], MsgFlags::empty()) {
             Ok(size) => size,
             Err(nix::Error::Sys(EINTR)) => 0,
             Err(err) => return Err(format!("{:?}", err)),
