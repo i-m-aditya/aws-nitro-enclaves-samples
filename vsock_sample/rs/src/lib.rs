@@ -82,8 +82,8 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
     let data = "Hello, world!".to_string();
     let buf = data.as_bytes();
     let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
-    send_u64(fd, 2 * len)?;
-    send_loop(fd, buf, 2 * len)?;
+    send_u64(fd, len)?;
+    send_loop(fd, buf, len)?;
 
     // std::thread::sleep(std::time::Duration::from_secs(5));
 
