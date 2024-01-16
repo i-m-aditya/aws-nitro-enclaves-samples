@@ -69,8 +69,11 @@ class VsockListener:
         """Receive data from a remote endpoint"""
         while True:
             (from_client, (remote_cid, remote_port)) = self.sock.accept()
+            print(f"Connection from {remote_cid}:{remote_port}")
+            print("\n")
             # Read 1024 bytes at a time
             while True:
+                print("yello\n")
                 try:
                     data = from_client.recv(1024).decode()
                 except socket.error:
