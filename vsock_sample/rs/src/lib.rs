@@ -108,15 +108,16 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
     }
     println!("Middle");
 
-    let vsocket1 = vsock_connect(args.cid, args.port)?;
-    println!("Vsock1 connected : {:?}", vsocket1);
-    let fd1 = vsocket.as_raw_fd();
+    // let vsocket1 = vsock_connect(args.cid, args.port)?;
+    // println!("Vsock1 connected : {:?}", vsocket1);
+    // let fd1 = vsocket.as_raw_fd();
 
     let data = "Hello, CIty!".to_string();
     let buf = data.as_bytes();
     let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
-    send_u64(fd1, len)?;
-    send_loop(fd1, buf, len)?;
+    println!("Sending {} bytes", len);
+    send_u64(fd, len)?;
+    send_loop(fd, buf, len)?;
 
     Ok(())
 }
