@@ -122,7 +122,7 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
     loop {
         println!("Started listening again");
         let fd = accept(socket_fd).map_err(|err| format!("Accept failed: {:?}", err))?;
-
+        println!("Fd: {:?}", fd);
         // TODO: Replace this with your server code
         let len = recv_u64(fd)?;
         let mut buf = [0u8; BUF_MAX_LEN];
