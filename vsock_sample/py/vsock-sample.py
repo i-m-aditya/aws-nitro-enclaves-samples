@@ -6,10 +6,12 @@
 import argparse
 import socket
 import sys
+import time
 
 
 class VsockStream:
     """Client"""
+
     def __init__(self, conn_tmo=5):
         self.conn_tmo = conn_tmo
 
@@ -29,7 +31,7 @@ class VsockStream:
             data = self.sock.recv(1024).decode()
             if not data:
                 break
-            print(data, end='', flush=True)
+            print(data, end="", flush=True)
         print()
 
     def disconnect(self):
@@ -41,13 +43,19 @@ def client_handler(args):
     client = VsockStream()
     endpoint = (args.cid, args.port)
     client.connect(endpoint)
-    msg = 'Hello, world!'
+    msg = "Hello, world!"
     client.send_data(msg.encode())
+    # sleep for 5 seconds
+    time.sleep(5)
+    new_msg = "Hello again!"
+    client.send_data(new_msg.encode())
+
     client.disconnect()
 
 
 class VsockListener:
     """Server"""
+
     def __init__(self, conn_backlog=128):
         self.conn_backlog = conn_backlog
 
@@ -69,7 +77,7 @@ class VsockListener:
                     break
                 if not data:
                     break
-                print(data, end='', flush=True)
+                print(data, end="", flush=True)
             print()
             from_client.close()
 
@@ -88,20 +96,25 @@ def server_handler(args):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog='vsock-sample')
-    parser.add_argument("--version", action="version",
-                        help="Prints version information.",
-                        version='%(prog)s 0.1.0')
+    parser = argparse.ArgumentParser(prog="vsock-sample")
+    parser.add_argument(
+        "--version",
+        action="version",
+        help="Prints version information.",
+        version="%(prog)s 0.1.0",
+    )
     subparsers = parser.add_subparsers(title="options")
 
-    client_parser = subparsers.add_parser("client", description="Client",
-                                          help="Connect to a given cid and port.")
+    client_parser = subparsers.add_parser(
+        "client", description="Client", help="Connect to a given cid and port."
+    )
     client_parser.add_argument("cid", type=int, help="The remote endpoint CID.")
     client_parser.add_argument("port", type=int, help="The remote endpoint port.")
     client_parser.set_defaults(func=client_handler)
 
-    server_parser = subparsers.add_parser("server", description="Server",
-                                          help="Listen on a given port.")
+    server_parser = subparsers.add_parser(
+        "server", description="Server", help="Listen on a given port."
+    )
     server_parser.add_argument("port", type=int, help="The local port to listen on.")
     server_parser.set_defaults(func=server_handler)
 
