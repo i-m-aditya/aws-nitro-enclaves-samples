@@ -132,7 +132,11 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
     )
     .map_err(|err| format!("Create socket failed: {:?}", err))?;
 
+    println!("Socket created: {:?}", socket_fd);
+
     let sockaddr = SockAddr::new_vsock(VMADDR_CID_ANY, args.port);
+
+    println!("Binding to {:?}", sockaddr);
 
     bind(socket_fd, &sockaddr).map_err(|err| format!("Bind failed: {:?}", err))?;
 
