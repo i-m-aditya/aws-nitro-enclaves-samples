@@ -34,6 +34,7 @@ pub fn send_loop(fd: RawFd, buf: &[u8], len: u64) -> Result<(), String> {
             Err(nix::Error::Sys(EINTR)) => 0,
             Err(err) => return Err(format!("{:?}", err)),
         };
+        std::thread::sleep(std::time::Duration::from_secs(5));
         send_bytes += size;
     }
 
