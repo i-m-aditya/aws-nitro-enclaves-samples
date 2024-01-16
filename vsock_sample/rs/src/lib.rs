@@ -99,6 +99,8 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
     send_u64(fd, 3 * len)?;
     send_loop(fd, buf, len)?;
 
+    std::thread::sleep(std::time::Duration::from_secs(5));
+
     let new_data = "Dean eingermane".to_string();
     let new_buf = new_data.as_bytes();
     let new_len: u64 = new_buf
