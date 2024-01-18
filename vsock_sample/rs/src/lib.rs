@@ -124,6 +124,8 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
     println!("Started listening again");
     let fd = accept(socket_fd).map_err(|err| format!("Accept failed: {:?}", err))?;
     loop {
+        println!("Go again");
+        std::thread::sleep(std::time::Duration.from_secs(5));
         let len = recv_u64(fd)?;
         println!("Buf length: {:?}", len);
         let mut buf = [0u8; BUF_MAX_LEN];
@@ -133,6 +135,8 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
 
         let new_len = recv_u64(fd)?;
         println!("New Length: {:?}", new_len);
+        let mut new_buf = [0u8; BUF_MAX_LEN];
+        recv_loop(fd, &buf, len)
         // health_check();
         // println!(
         //     "{}",
