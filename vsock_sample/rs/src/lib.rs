@@ -84,6 +84,8 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
     let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
     send_u64(fd, len)?;
     send_loop(fd, buf, len)?;
+    send_u64(fd, 4)?;
+    // send_loop(fd, buf, len)?;
 
     // std::thread::sleep(std::time::Duration::from_secs(5));
 
@@ -125,8 +127,12 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
         println!("Fd: {:?}", fd);
         // TODO: Replace this with your server code
         let len = recv_u64(fd)?;
+        println!("Length: {:?}", len);
         let mut buf = [0u8; BUF_MAX_LEN];
         recv_loop(fd, &mut buf, len)?;
+
+        let new_len = recv_u64(fd)?;
+        println!("New Length: {:?}", new_len);
         health_check();
         println!(
             "{}",
