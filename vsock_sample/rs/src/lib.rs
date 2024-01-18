@@ -127,7 +127,7 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
     let fd = accept(socket_fd).map_err(|err| format!("Accept failed: {:?}", err))?;
     loop {
         println!("Go again");
-        std::thread::sleep(std::time::Duration.from_secs(5));
+        std::thread::sleep(std::time::Duration::from_secs(5));
         let len = recv_u64(fd)?;
         println!("Buf length: {:?}", len);
         let mut buf = [0u8; BUF_MAX_LEN];
