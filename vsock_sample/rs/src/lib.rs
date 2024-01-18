@@ -138,7 +138,7 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
         let new_len = recv_u64(fd)?;
         println!("New Length: {:?}", new_len);
         let mut new_buf = [0u8; BUF_MAX_LEN];
-        recv_loop(fd, &buf, len)?;
+        recv_loop(fd, &mut new_buf, len)?;
         // health_check();
         // println!(
         //     "{}",
