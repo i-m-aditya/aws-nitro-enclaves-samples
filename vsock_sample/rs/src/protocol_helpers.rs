@@ -45,12 +45,12 @@ pub fn recv_loop(fd: RawFd, buf: &mut [u8], len: u64) -> Result<(), String> {
     let mut recv_bytes = 0;
 
     while recv_bytes < len {
-        println!("recv_bytes: {}", recv_bytes);
         let size = match recv(fd, &mut buf[recv_bytes..len], MsgFlags::empty()) {
             Ok(size) => size,
             Err(nix::Error::Sys(EINTR)) => 0,
             Err(err) => return Err(format!("{:?}", err)),
         };
+
         if size == 0 {
             break;
         }
