@@ -137,7 +137,7 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
 
         println!("{:?}", buf);
         println!("Length of buf: {}", buf.len());
-        println!("Received: {}", String::from_utf8(buf.to_vec()));
+        println!("Received: {}", String::from_utf8(buf.to_vec()).unwrap());
         std::thread::sleep(std::time::Duration::from_secs(5));
 
         // *************
