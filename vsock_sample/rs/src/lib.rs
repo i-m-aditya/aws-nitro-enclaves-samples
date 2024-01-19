@@ -84,10 +84,12 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
     let len: u64 = buf.len().try_into().map_err(|err| format!("{:?}", err))?;
     send_u64(fd, len)?;
     send_loop(fd, buf, len)?;
-    send_u64(fd, 4)?;
+    // **********
+    // send_u64(fd, 4)?;
 
-    send_loop(fd, "Dean".as_bytes(), 4);
+    // send_loop(fd, "Dean".as_bytes(), 4);
     // send_loop(fd, buf, len)?;
+    // **********
 
     // std::thread::sleep(std::time::Duration::from_secs(5));
 
@@ -133,20 +135,19 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
         let mut buf = [0u8; BUF_MAX_LEN];
         recv_loop(fd, &mut buf, len)?;
 
-        println!(
-            "Received: {:?}",
-            String::from_utf8(buf.to_vec()[0..len as usize])
-        );
+        println!("Received: {:?}", String::from_utf8(buf.to_vec()));
 
-        let new_len = recv_u64(fd)?;
-        println!("New Length: {:?}", new_len);
+        // *************
+        // let new_len = recv_u64(fd)?;
+        // println!("New Length: {:?}", new_len);
 
-        let mut new_buf = [0u8; BUF_MAX_LEN];
-        recv_loop(fd, &mut new_buf, len)?;
-        println!(
-            "Received: {:?}",
-            String::from_utf8(new_buf.to_vec()[0..new_len as usize])
-        );
+        // let mut new_buf = [0u8; BUF_MAX_LEN];
+        // recv_loop(fd, &mut new_buf, len)?;
+        // println!(
+        //     "Received: {:?}",
+        //     String::from_utf8(new_buf.to_vec()[0..new_len as usize])
+        // );
+        // *************
         // health_check();
         // println!(
         //     "{}",
