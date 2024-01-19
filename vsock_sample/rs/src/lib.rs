@@ -133,12 +133,14 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
         let mut buf = [0u8; BUF_MAX_LEN];
         recv_loop(fd, &mut buf, len)?;
 
-        println!("Received: {:?}", String::from_utf8(buf.to_vec()));
+        println!("Received: {:?}", String::from_utf8(buf.to_vec()[0..len]));
 
         let new_len = recv_u64(fd)?;
         println!("New Length: {:?}", new_len);
+        
         let mut new_buf = [0u8; BUF_MAX_LEN];
         recv_loop(fd, &mut new_buf, len)?;
+        println!("Received: {:?}", String::from_utf8(new_buf.to_vec()[0..new_len]));
         // health_check();
         // println!(
         //     "{}",
