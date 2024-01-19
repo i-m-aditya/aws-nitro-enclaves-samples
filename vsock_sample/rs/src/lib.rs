@@ -138,8 +138,7 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
         println!("{:?}", buf);
         println!("Length of buf: {}", buf.len());
         println!("Received: {:?}", String::from_utf8(buf.to_vec()));
-
-        std::thread::sleep(time::Duration::from_secs(10));
+        std::thread::sleep(std::time::Duration::from_secs(5));
 
         // *************
         // let new_len = recv_u64(fd)?;
