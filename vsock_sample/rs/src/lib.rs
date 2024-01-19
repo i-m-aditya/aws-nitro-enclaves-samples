@@ -85,7 +85,7 @@ pub fn client(args: ClientArgs) -> Result<(), String> {
     send_u64(fd, len)?;
     send_loop(fd, buf, len)?;
     // **********
-    // send_u64(fd, 4)?;
+    send_u64(fd, 4)?;
 
     // send_loop(fd, "Dean".as_bytes(), 4);
     // send_loop(fd, buf, len)?;
@@ -141,8 +141,9 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
         std::thread::sleep(std::time::Duration::from_secs(5));
 
         // *************
-        // let new_len = recv_u64(fd)?;
-        // println!("New Length: {:?}", new_len);
+        let new_len = recv_u64(fd)?;
+        println!("New Length: {:?}", new_len);
+        // break;
 
         // let mut new_buf = [0u8; BUF_MAX_LEN];
         // recv_loop(fd, &mut new_buf, len)?;
