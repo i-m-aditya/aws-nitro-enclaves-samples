@@ -137,11 +137,7 @@ pub fn server(args: ServerArgs) -> Result<(), String> {
 
         println!("{:?}", buf);
         println!("Length of buf: {}", buf.len());
-        println!(
-            "{}",
-            String::from_utf8(buf.to_vec())
-                .map_err(|err| format!("The received bytes are not UTF-8: {:?}", err))?
-        );
+        println!("Received: {}", String::from_utf8(buf.to_vec()));
         std::thread::sleep(std::time::Duration::from_secs(5));
 
         // *************
